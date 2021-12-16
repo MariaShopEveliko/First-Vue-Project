@@ -42,13 +42,15 @@ header {
 }
 
 #user-goals li {
-  margin: 1rem 0;
+  margin: 0.5%;
   font-size: 1.25rem;
   font-weight: bold;
   background-color: #8ddba4;
   padding: 0.5rem;
   color: #1f1f1f;
   border-radius: 25px;
+  width: 49%;
+  display: inline-block;
 }
 
 #user-goals input {
