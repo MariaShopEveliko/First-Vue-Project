@@ -8,7 +8,7 @@
       <label>Age:</label>
       <input type="number"  v-model="enteredAge"/>
     </div>
-    <button>Add User</button>
+    <button>Submit</button>
   </form>
 </template>
 

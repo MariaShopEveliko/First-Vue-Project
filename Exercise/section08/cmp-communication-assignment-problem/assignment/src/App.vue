@@ -6,14 +6,15 @@
     <main>
       <user-data @submit-user="addNewUser"></user-data>
       <ul>
+        <active-user :name="user.name" :age="user.age"></active-user>
+      </ul>
+      <!--  Add new user functionality
         <active-user
           v-for="user in users"
-          :key="user.id"
-          :id="user.id"
+          :key="user.name"
           :name="user.name"
           :age="user.age"
-        ></active-user>
-      </ul>
+        ></active-user> -->
     </main>
   </section>
 </template>
@@ -21,23 +22,33 @@
 export default {
   data() {
     return {
-      users: [
+      user: {
+        name: "Manuel",
+        age: "25",
+      },
+      /* Add new user functionality
+     users: [
         {
           id: "manuel",
           name: "Manuel",
           age: "25",
         },
-      ],
+      ], */
     };
   },
   methods: {
     addNewUser(name, age) {
+      this.user = {
+        name: name,
+        age: age,
+      };
+      /*  Add new user functionality
       const newUserContact = {
         id: new Date().toISOString(),
         name: name,
         age: age,
       };
-      this.users.push(newUserContact);
+      this.users.push(newUserContact); */
     },
   },
 };
