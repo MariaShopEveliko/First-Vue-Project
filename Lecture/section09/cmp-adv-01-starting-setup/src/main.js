@@ -4,8 +4,8 @@ import App from './App.vue';
 
 /* Global components: they are available globally in the entire app. 
 Vue downloads them on page load which will be a problem for big applications */
-import BaseBadge from './components/BaseBadge.vue';
-import BaseCard from "./components/BaseCard.vue";
+import BaseBadge from './components/UI/BaseBadge';
+import BaseCard from "./components/UI/BaseCard.vue";
 
 const app = createApp(App);
 

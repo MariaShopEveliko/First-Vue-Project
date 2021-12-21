@@ -2,62 +2,50 @@
   <div>
     <!-- option1: <the-header></the-header> -->
     <TheHeader />
-    <!--will automatically create kebab case tag-->
-    <badge-list></badge-list>
-    <user-info
-      :full-name="activeUser.name"
-      :info-text="activeUser.description"
-      :role="activeUser.role"
-    ></user-info>
-    <table style="width: 100%;">
-      <tr>
-        <td style="border: 1px solid grey;">
-          <course-goals>
-            <template #default="slotProps">
-              <!--slotProps will be an object witll all defined props on this slot-->
-              <h2>{{ slotProps.item }}</h2>
-              <p>{{ slotProps.anotherProp }}</p>
-              <!--slotProps["another-prop"]-->
-            </template>
-          </course-goals>
-        </td>
-        <td>
-          <!--You can remove template when the content should go to the default (only) slot-->
-          <course-goals #default="slotProps">
-            <!--slotProps will be an object witll all defined props on this slot-->
-            <h2>{{ slotProps.item }}</h2>
-            <p>{{ slotProps.anotherProp }}</p>
-            <!--slotProps["another-prop"]-->
-          </course-goals>
-        </td>
-      </tr>
-    </table>
+    <button @click="setSelectedComponent('active-goals')">Active Goals</button
+    >&nbsp;
+    <button @click="setSelectedComponent('manage-goals')">Manage Goals</button>
+    <!-- Old way 
+    <ActiveGoals v-if="selectedComponents === 'active-goals'"/>
+    <ManageGoals v-if="selectedComponents === 'manage-goals'"/> 
+    Dynamic components: 
+    - component 
+    - keep-alive - tells browser to cache the component & keep it's content    -->
+    <keep-alive>
+      <component :is="selectedComponents"
+        ><!--Show the component that is selected--></component
+      >
+    </keep-alive>
   </div>
 </template>
 
 <script>
-import TheHeader from "./components/TheHeader.vue";
-import BadgeList from "./components/BadgeList.vue";
-import UserInfo from "./components/UserInfo.vue";
-import CourseGoals from "./components/CourseGoals.vue";
+import TheHeader from "./components/layout/TheHeader.vue";
+import ActiveGoals from "./components/ActiveGoals.vue";
+import ManageGoals from "./components/ManageGoals.vue";
 
 export default {
   components: {
-    // Local component: components will be available onnly in this file
+    // Local component: components will be available only in this file
     //option1: "the-header": TheHeader // key: value
-    TheHeader, //option2,
-    BadgeList,
-    UserInfo,
-    CourseGoals,
+    TheHeader,
+    ActiveGoals,
+    ManageGoals,
   },
   data() {
     return {
+      selectedComponents: "active-goals",
       activeUser: {
         name: "Maximilian Schwarzmüller",
         description: "Site owner and admin",
         role: "admin",
       },
     };
+  },
+  methods: {
+    setSelectedComponent(cmp) {
+      this.selectedComponents = cmp;
+    },
   },
 };
 </script>
