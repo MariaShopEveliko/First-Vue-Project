@@ -46,7 +46,7 @@ export default {
       invalidInput: false,
     };
   },
-  emits: ['survey-submit'],
+  // emits: ['survey-submit'],
   methods: {
     submitSurvey() {
       if (this.enteredName === '' || !this.chosenRating) {
@@ -55,9 +55,22 @@ export default {
       }
       this.invalidInput = false;
 
+      /* we don't need emit because of the fetch 
       this.$emit('survey-submit', {
         userName: this.enteredName,
         rating: this.chosenRating,
+      }); */
+
+      fetch("https://first-vue-project-339eb-default-rtdb.europe-west1.firebasedatabase.app/surveys.json", {
+        method: "POST", //by default: GET
+        headers:{
+          "Content-Type": "application/json" //tells server that we'll add the data in this request in json format
+        },
+        body: // data we'll add - what we're emiting
+        JSON.stringify({ //format object to a json
+          name: this.enteredName,
+          rating: this.chosenRating
+        })
       });
 
       this.enteredName = '';
