@@ -1,5 +1,4 @@
 <template>
-<teleport to="body">
   <base-dialog v-if="inputIsInvalid" title="Invalid Input" @close="confirmError">
     <template #default>
       <p>Unfortunately, at least one input value is invalid</p>
@@ -12,7 +11,6 @@
       <base-button @click="confirmError"> Okay</base-button>
     </template>
   </base-dialog>
-  </teleport>
   <base-card>
     <h2>Add resource</h2>
     <form @submit.prevent="submitData">
