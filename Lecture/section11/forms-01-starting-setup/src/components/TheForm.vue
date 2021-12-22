@@ -1,16 +1,33 @@
 <template>
-  <form>
-    <div class="form-control">
+  <form @submit.prevent="submitForm">
+    <div
+      class="form-control"
+      :class="{ invalid: userNameValidity === 'invalid' }"
+    >
       <label for="user-name">Your Name</label>
-      <input id="user-name" name="user-name" type="text" />
+      <input
+        id="user-name"
+        name="user-name"
+        type="text"
+        v-model.trim="userName"
+        @blur="validateInput"
+      />
+      <p v-if="userNameValidity === 'invalid'">Please enter a valid name</p>
     </div>
     <div class="form-control">
       <label for="age">Your Age (Years)</label>
-      <input id="age" name="age" type="number" />
+      <input
+        id="age"
+        name="age"
+        type="number"
+        v-model="userAge"
+        ref="ageInput"
+      />
+      <!--by default type number wont return a Number in the code-->
     </div>
     <div class="form-control">
       <label for="referrer">How did you hear about us?</label>
-      <select id="referrer" name="referrer">
+      <select id="referrer" name="referrer" v-model="referrer">
         <option value="google">Google</option>
         <option value="wom">Word of mouth</option>
         <option value="newspaper">Newspaper</option>
@@ -19,38 +36,147 @@
     <div class="form-control">
       <h2>What are you interested in?</h2>
       <div>
-        <input id="interest-news" name="interest" type="checkbox" />
+        <input
+          id="interest-news"
+          name="interest"
+          value="news"
+          type="checkbox"
+          v-model="interests"
+        />
         <label for="interest-news">News</label>
       </div>
       <div>
-        <input id="interest-tutorials" name="interest" type="checkbox" />
+        <input
+          id="interest-tutorials"
+          name="interest"
+          value="tutorials"
+          type="checkbox"
+          v-model="interests"
+        />
         <label for="interest-tutorials">Tutorials</label>
       </div>
       <div>
-        <input id="interest-nothing" name="interest" type="checkbox" />
+        <input
+          id="interest-nothing"
+          name="interest"
+          value="nothing"
+          type="checkbox"
+          v-model="interests"
+        />
         <label for="interest-nothing">Nothing</label>
       </div>
     </div>
     <div class="form-control">
       <h2>How do you learn?</h2>
       <div>
-        <input id="how-video" name="how" type="radio" />
+        <input
+          id="how-video"
+          name="how"
+          type="radio"
+          value="video"
+          v-model="how"
+        />
         <label for="how-video">Video Courses</label>
       </div>
       <div>
-        <input id="how-blogs" name="how" type="radio" />
+        <input
+          id="how-blogs"
+          name="how"
+          type="radio"
+          value="blogs"
+          v-model="how"
+        />
         <label for="how-blogs">Blogs</label>
       </div>
       <div>
-        <input id="how-other" name="how" type="radio" />
+        <input
+          id="how-other"
+          name="how"
+          type="radio"
+          value="other"
+          v-model="how"
+        />
         <label for="how-other">Other</label>
       </div>
+    </div>
+    <div class="form-control">
+      <!-- we have props: ["modelValue"],  emits:["update:modelValue"]
+        In the case of custom components, v-model is same as v-bind:modelValue="" v-update:modelValue=""-->
+      <rating-control v-model="rating"></rating-control>
+      </div>
+    <div class="form-control">
+      <input
+        type="checkbox"
+        id="confirm-terms"
+        name="confirm-terms"
+        v-model="confirm"
+      />
+      <label for="confirm-terms">Agree to terms of use?</label>
     </div>
     <div>
       <button>Save Data</button>
     </div>
   </form>
 </template>
+
+<script>
+import RatingControl from './RatingControl.vue';
+export default {
+  components: {
+    RatingControl,
+  },
+  data() {
+    return {
+      userName: '',
+      userAge: null,
+      referrer: 'wom', //default value for select
+      /* checkboxes & radiobtns: add v-model to every input */
+      interests: [], //interest are array because it's input are with the same name = group element which would be selected all, not 1 by 1
+      how: null,
+      confirm: false, // for signle checboxes set true/false
+      rating: null,
+      userNameValidity: 'pending',
+    };
+  },
+  methods: {
+    submitForm() {
+      console.log('Username: ' + this.userName);
+      this.userName = ''; //reset what user entered
+
+      console.log('Age: ' + this.userAge + ' ' + typeof this.userAge); //type number
+      console.log(
+        'Age ref: ' +
+          this.$refs.ageInput.value +
+          ' ' +
+          typeof this.$refs.ageInput.value
+      ); //type string - value is always a string
+      this.userAge = null;
+
+      console.log('Referrer: ' + this.referrer);
+      this.referrer = 'wom';
+
+      console.log('Checkboxes: ' + this.interests);
+      this.interests = [];
+
+      console.log('Radiobtns: ' + this.how);
+      this.how = null;
+
+      console.log('Confirm: ' + this.confirm);
+      this.confirm = false;
+
+      console.log('Rating: ' + this.rating);
+      this.rating = null;
+    },
+    validateInput() {
+      if (this.userName === '') {
+        this.userNameValidity = 'invalid';
+      } else {
+        this.userNameValidity = 'valid';
+      }
+    },
+  },
+};
+</script>
 
 <style scoped>
 form {
@@ -64,6 +190,15 @@ form {
 
 .form-control {
   margin: 0.5rem 0;
+}
+
+.form-control.invalid input {
+  border-color: red;
+}
+
+.form-control.invalid label,
+.form-control.invalid p {
+  color: red;
 }
 
 label {
