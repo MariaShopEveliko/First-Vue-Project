@@ -3,10 +3,12 @@
     <teams-item
       v-for="team in teams"
       :key="team.id"
+      :id="team.id"
       :name="team.name"
       :member-count="team.members.length"
     ></teams-item>
   </ul>
+<router-view></router-view> <!--rout for all child items rout-->
 </template>
 
 <script>

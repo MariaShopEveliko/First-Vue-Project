@@ -1,9 +1,12 @@
 <template>
-  <the-navigation @set-page="setActivePage"></the-navigation>
+  <the-navigation></the-navigation>
   <main>
     <!-- <component :is="activePage"></component> -->
     <router-view></router-view> <!--built it component because of router-->
   </main>
+  <footer>
+    <router-view name="footer"></router-view>
+  </footer>
 </template>
 
 <script>
@@ -15,7 +18,6 @@ export default {
   },
   data() {
     return {
-      activePage: 'teams-list',
       teams: [
         { id: 't1', name: 'Frontend Engineers', members: ['u1', 'u2'] },
         { id: 't2', name: 'Backend Engineers', members: ['u1', 'u2', 'u3'] },
@@ -35,12 +37,7 @@ export default {
       teams: this.teams,
       users: this.users,
     };
-  },
-  methods: {
-    setActivePage(page) {
-      this.activePage = page;
-    },
-  },
+  }
 };
 </script>
 
@@ -54,6 +51,16 @@ html {
 }
 
 body {
+  margin: 0;
+}
+footer {
+  width: 100%;
+  background-color: #11005c;
+  text-align: center;
+  color: #fff;
+  padding: 0.5rem;
+}
+footer h2 {
   margin: 0;
 }
 </style>
