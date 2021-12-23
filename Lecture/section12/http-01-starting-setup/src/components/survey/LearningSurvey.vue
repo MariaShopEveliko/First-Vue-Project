@@ -29,6 +29,7 @@
         <p
           v-if="invalidInput"
         >One or more input fields are invalid. Please check your provided data.</p>
+        <p v-if="error">{{error}}</p>
         <div>
           <base-button>Submit</base-button>
         </div>
@@ -44,9 +45,10 @@ export default {
       enteredName: '',
       chosenRating: null,
       invalidInput: false,
+      error: null
     };
   },
-  emits: ['survey-submit'],
+  // emits: ['survey-submit'],
   methods: {
     submitSurvey() {
       if (this.enteredName === '' || !this.chosenRating) {
@@ -55,9 +57,30 @@ export default {
       }
       this.invalidInput = false;
 
+      /* we don't need emit because of the fetch 
       this.$emit('survey-submit', {
         userName: this.enteredName,
         rating: this.chosenRating,
+      }); */
+      this.error = null;
+      fetch("https://first-vue-project-339eb-default-rtdb.europe-west1.firebasedatabase.app/surveys.json", {
+        method: "POST", //by default: GET
+        headers:{
+          "Content-Type": "application/json" //tells server that we'll add the data in this request in json format
+        },
+        body: // data we'll add - what we're emiting
+        JSON.stringify({ //format object to a json
+          name: this.enteredName,
+          rating: this.chosenRating
+        })
+      }).then(response =>{
+        if(!response.ok){ // on 400 - server error
+          throw new Error("Could not save data!");
+        }
+      }).catch(error =>{
+        console.log(error);
+        // this.error = "Something went wrong. Try again later";
+        this.error = error.message; // new Error will set a msg
       });
 
       this.enteredName = '';

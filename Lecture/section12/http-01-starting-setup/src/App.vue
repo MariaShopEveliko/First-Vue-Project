@@ -1,6 +1,9 @@
 <template>
+  <!--don't need this because of fetch 
   <learning-survey @survey-submit="storeSurvey"></learning-survey>
-  <user-experiences :results="savedSurveyResults"></user-experiences>
+  <user-experiences :results="savedSurveyResults"></user-experiences>-->
+   <learning-survey></learning-survey>
+  <user-experiences></user-experiences>
 </template>
 
 <script>
@@ -12,6 +15,7 @@ export default {
     LearningSurvey,
     UserExperiences,
   },
+  /* don't need this because of fetch
   data() {
     return {
       savedSurveyResults: [],
@@ -27,7 +31,7 @@ export default {
       this.savedSurveyResults.push(surveyResult);
       console.log(surveyResult);
     },
-  },
+  }, */
 };
 </script>
 
