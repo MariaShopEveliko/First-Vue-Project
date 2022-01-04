@@ -43,10 +43,10 @@ export default {
   beforeRouteLeave(to, from, next){ // called before each & enter
     console.log('\n *** \n Users List component - beforeRouteLeave');
     console.log({ 'to page': to, 'from page': from });
-    if (this.savedChanges){
+    if (this.changesSaved){
       next();
     } else {
-      const userWantsToLeave = confirm("Are you sure? You got unsaved changes"); //
+      const userWantsToLeave = window.confirm("Are you sure? You got unsaved changes"); //
       next(userWantsToLeave); // will got true / false (and user will stay on this case)
     }
   },
