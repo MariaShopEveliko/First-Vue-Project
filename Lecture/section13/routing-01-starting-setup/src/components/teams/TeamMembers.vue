@@ -42,6 +42,15 @@ export default {
     this.loadTeamMembers(this.teamId);
     console.log(this.$route.query);
   },
+  beforeRouteUpdate(to, from, next) { // will be called when this component is about to be reused. Alternative to watch
+    console.log('\n *** \n Team member component - beforeEnter');
+    console.log({ 'to page': to, 'from page': from });
+    
+    /* commented as it's same as on watch
+    this.loadTeamMembers(to.params.teamId);
+    */
+    next(); // deny or confirm
+  },
   watch: {
     teamId(newId) {
       this.loadTeamMembers(newId);
