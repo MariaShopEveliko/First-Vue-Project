@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <users-list></users-list>
+  </div>
+  <div class="container">
     <div class="block" :class="{ animate: isBlockAnimated }">
       <!--add animate class-->
     </div>
@@ -14,7 +17,7 @@
     </transition>
     <!--:css="false" means that you will use only js for animation so vue wont look at css at all => improves performance-->
     <transition
-     :css="false"
+      :css="false"
       @before-enter="beforeEnter"
       @enter="enter"
       @after-enter="afterEnter"
@@ -56,7 +59,11 @@
 </template>  
 
 <script>
+import UsersList from './components/UsersList.vue';
 export default {
+  components: {
+    UsersList,
+  },
   data() {
     return {
       dialogIsVisible: false,
@@ -65,7 +72,7 @@ export default {
       infoIsVisible: false,
       enterInterval: null,
       leaveInterval: null,
-      currentOpacity: 0
+      currentOpacity: 0,
     };
   },
   methods: {
@@ -99,7 +106,7 @@ export default {
       console.log(el);
       let round = 1;
       this.enterInterval = setInterval(() => {
-        this.currentOpacity = round * 0.01; 
+        this.currentOpacity = round * 0.01;
         el.style.opacity = this.currentOpacity;
         round++;
         if (round > 100) {
