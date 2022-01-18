@@ -11,7 +11,7 @@ export default {
            this.$store.commit('increment');
        }*/
     //...mapActions(['increment', 'increase'])
-    ...mapActions({ // can be used for mapGetters as well
+    ...mapActions('counterNamespace',{ // can be used for mapGetters as well
         inc: 'increment',
         increase: 'increase'
     })

@@ -30,7 +30,7 @@ export default {
       //this.$store.commit('increase', {value: 10});
       this.$store.dispatch({
         // dispatch - for actions, commit - for methods
-        type: 'increase',
+        type: 'counterNamespace/increase',
         value: 10,
       });
     },

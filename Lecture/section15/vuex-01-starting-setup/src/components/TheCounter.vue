@@ -12,7 +12,7 @@ export default {
       return this.$store.getters.finalCounter;
     }
     Another & better way: */
-    ...mapGetters(['finalCounter'])
+    ...mapGetters('counterNamespace', ['finalCounter'])
   }
 };
 </script>
