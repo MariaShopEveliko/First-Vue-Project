@@ -1,5 +1,8 @@
 <template>
-  <base-container title="Vuex">
+  <base-container title="User Authentication">
+    <user-auth></user-auth>
+  </base-container>
+  <base-container title="Vuex" v-if="isAuth">
     <the-counter></the-counter>
     <favorite-value></favorite-value>
     <button @click="increase">Add 20</button>
@@ -12,22 +15,30 @@ import BaseContainer from './components/BaseContainer.vue';
 import TheCounter from './components/TheCounter.vue';
 import ChangeCounter from './components/ChangeCounter.vue';
 import FavoriteValue from './components/FavoriteValue.vue';
+import UserAuth from './components/UserAuth.vue';
 
 export default {
   components: {
     BaseContainer,
     TheCounter,
     ChangeCounter,
-    FavoriteValue
+    FavoriteValue,
+    UserAuth,
   },
   methods: {
-    increase(){
-       //this.$store.commit('increase', {value: 10});
-       this.$store.dispatch({ // dispatch - for actions, commit - for methods
-         type: 'increase',
-         value: 10
-       })
-    }
+    increase() {
+      //this.$store.commit('increase', {value: 10});
+      this.$store.dispatch({
+        // dispatch - for actions, commit - for methods
+        type: 'increase',
+        value: 10,
+      });
+    },
+  },
+  computed:{
+      isAuth(){
+          return this.$store.getters.isAuthenticated;
+      }
   }
 };
 </script>
@@ -50,10 +61,10 @@ button {
   background: white;
   border: 1px solid #ccc;
   margin-right: 10px;
-  transition: .5s;
+  transition: 0.5s;
 }
 
-button:hover{
+button:hover {
   background: #ccc;
   cursor: pointer;
 }
