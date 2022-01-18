@@ -2,7 +2,7 @@
   <base-container title="Vuex">
     <the-counter></the-counter>
     <favorite-value></favorite-value>
-    <button @click="increase">Add 10</button>
+    <button @click="increase">Add 20</button>
     <change-counter></change-counter>
   </base-container>
 </template>
@@ -23,7 +23,7 @@ export default {
   methods: {
     increase(){
        //this.$store.commit('increase', {value: 10});
-       this.$store.commit({
+       this.$store.dispatch({ // dispatch - for actions, commit - for methods
          type: 'increase',
          value: 10
        })
